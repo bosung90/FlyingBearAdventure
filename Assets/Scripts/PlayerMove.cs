@@ -44,8 +44,17 @@ public class PlayerMove : MonoBehaviour {
 	}
 	private void SyncedMovement()
 	{
-		syncTime += Time.deltaTime;
-		_rigidBody.position = Vector3.Lerp(syncStartPosition, syncEndPosition, syncTime / syncDelay);
+		if(Vector3.Distance(syncStartPosition, syncEndPosition) > 2f)
+		{
+			syncStartPosition = syncEndPosition;
+			_rigidBody.position = syncEndPosition;
+			syncTime = 0f;
+		}
+		else
+		{
+			syncTime += Time.deltaTime;
+			_rigidBody.position = Vector3.Lerp(syncStartPosition, syncEndPosition, syncTime / syncDelay);
+		}
 	}
 	//=================================================================================
 
