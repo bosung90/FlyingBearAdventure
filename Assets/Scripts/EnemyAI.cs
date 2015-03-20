@@ -6,7 +6,7 @@ public class EnemyAI : MonoBehaviour {
 	private bool canSee = false;
 
 	public Transform Sight;
-	public Transform Target;
+	private Transform Target = null;
 	[Range(0,30f)]
 	public float VisionRange = 10.0f;
 	[Range(0,360f)]
@@ -21,6 +21,19 @@ public class EnemyAI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+		if(Target == null)
+		{
+			GameObject player = GameObject.FindGameObjectWithTag("Player") as GameObject;
+			if(player == null)
+			{
+				return;
+			}
+			else
+			{
+				Target = player.transform;
+			}
+		}
 	
 		//calculate the angle between this and target
 		Vector2 targetDir = new Vector2(Target.position.x - transform.position.x, Target.position.z - transform.position.z);

@@ -3,6 +3,9 @@ using System.Collections;
 
 public class Multiplayer : MonoBehaviour {
 
+	public GameObject Player;
+	public GameObject Enemy;
+
 	private const string typeName = "PrisonEscape";
 	private const string gameName = "EscapeRoom1";
 	private const int roomSize = 2;
@@ -18,6 +21,9 @@ public class Multiplayer : MonoBehaviour {
 	void OnServerInitialized()
 	{
 		Debug.Log(string.Format("Server Initializied with GameName: {0} on port: {1}", typeName, port));
+		//Spawn player and enemy upon server initialization.
+		Network.Instantiate(Player, Player.transform.position, Quaternion.identity, 0);
+		Network.Instantiate(Enemy, Enemy.transform.position, Quaternion.identity, 0);
 	}
 	//====================================================================================
 

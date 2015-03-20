@@ -5,10 +5,15 @@ public class PlayerMove : MonoBehaviour {
 
 	public float speed = 10f;
 	private Rigidbody _rigidBody;
+
+	private NetworkView _networkView;
 	
 	void Update()
 	{
-		InputMovement();
+		if (_networkView.isMine) 
+		{
+			InputMovement ();
+		}
 		_rigidBody = GetComponent<Rigidbody> ();
 
 	}
@@ -30,11 +35,6 @@ public class PlayerMove : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+		_networkView = GetComponent<NetworkView> ();
 	}
 }
