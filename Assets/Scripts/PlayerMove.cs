@@ -3,10 +3,52 @@ using System.Collections;
 
 public class PlayerMove : MonoBehaviour {
 
+	[Range(0,10f)]
 	public float speed = 10f;
-	private Rigidbody _rigidBody;
 
+	private Rigidbody _rigidBody;
 	private NetworkView _networkView;
+
+
+	//===========Make Transform Sync smooth on client side using interpolation + prediction=====================
+	private float lastSynchronizationTime = 0f;
+	private float syncDelay = 0f;
+	private float syncTime = 0f;
+	private Vector3 syncStartPosition = Vector3.zero;
+	private Vector3 syncEndPosition = Vector3.zero;
+	
+	void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
+	{
+		Vector3 syncPosition = Vector3.zero;
+		Vector3 syncVelocity = Vector3.zero;
+		if (stream.isWriting)
+		{
+			syncPosition = _rigidBody.position;
+			stream.Serialize(ref syncPosition);
+			
+			syncVelocity = _rigidBody.velocity;
+			stream.Serialize(ref syncVelocity);
+		}
+		else
+		{
+			stream.Serialize(ref syncPosition);
+			stream.Serialize(ref syncVelocity);
+			
+			syncTime = 0f;
+			syncDelay = Time.time - lastSynchronizationTime;
+			lastSynchronizationTime = Time.time;
+			
+			syncEndPosition = syncPosition + syncVelocity * syncDelay;
+			syncStartPosition = _rigidBody.position;
+		}
+	}
+	private void SyncedMovement()
+	{
+		syncTime += Time.deltaTime;
+		_rigidBody.position = Vector3.Lerp(syncStartPosition, syncEndPosition, syncTime / syncDelay);
+	}
+	//=================================================================================
+
 	
 	void Update()
 	{
@@ -14,8 +56,10 @@ public class PlayerMove : MonoBehaviour {
 		{
 			InputMovement ();
 		}
-		_rigidBody = GetComponent<Rigidbody> ();
-
+		else
+		{
+			SyncedMovement();
+		}
 	}
 	
 	void InputMovement()
@@ -36,5 +80,6 @@ public class PlayerMove : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		_networkView = GetComponent<NetworkView> ();
+		_rigidBody = GetComponent<Rigidbody> ();
 	}
 }
