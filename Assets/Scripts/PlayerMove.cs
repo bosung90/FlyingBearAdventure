@@ -6,9 +6,12 @@ public class PlayerMove : MonoBehaviour {
 	[Range(0,10f)]
 	public float speed = 10f;
 
+	public Transform cardboardCamera;
+
 	private Rigidbody _rigidBody;
 	private NetworkView _networkView;
 
+	private Cardboard cardboard;
 
 	//===========Make Transform Sync smooth on client side using interpolation + prediction=====================
 	private float lastSynchronizationTime = 0f;
@@ -73,22 +76,24 @@ public class PlayerMove : MonoBehaviour {
 	
 	void InputMovement()
 	{
-		if (Input.GetKey(KeyCode.W))
-			_rigidBody.MovePosition(_rigidBody.position + Vector3.forward * speed * Time.deltaTime);
+		if (cardboard.CardboardTriggered)
+			_rigidBody.MovePosition(_rigidBody.position + cardboardCamera.forward * speed * Time.deltaTime);
 		
-		if (Input.GetKey(KeyCode.S))
-			_rigidBody.MovePosition(_rigidBody.position - Vector3.forward * speed * Time.deltaTime);
-		
-		if (Input.GetKey(KeyCode.D))
-			_rigidBody.MovePosition(_rigidBody.position + Vector3.right * speed * Time.deltaTime);
-		
-		if (Input.GetKey(KeyCode.A))
-			_rigidBody.MovePosition(_rigidBody.position - Vector3.right * speed * Time.deltaTime);
+//		if (Input.GetKey(KeyCode.S))
+//			_rigidBody.MovePosition(_rigidBody.position - Vector3.forward * speed * Time.deltaTime);
+//		
+//		if (Input.GetKey(KeyCode.D))
+//			_rigidBody.MovePosition(_rigidBody.position + Vector3.right * speed * Time.deltaTime);
+//		
+//		if (Input.GetKey(KeyCode.A))
+//			_rigidBody.MovePosition(_rigidBody.position - Vector3.right * speed * Time.deltaTime);
 	}
 
 	// Use this for initialization
 	void Start () {
 		_networkView = GetComponent<NetworkView> ();
 		_rigidBody = GetComponent<Rigidbody> ();
+
+		cardboard = new Cardboard ();
 	}
 }

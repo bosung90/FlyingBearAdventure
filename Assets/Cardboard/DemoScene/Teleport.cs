@@ -23,8 +23,8 @@ public class Teleport : MonoBehaviour {
   void Start() {
     head = Camera.main.GetComponent<StereoController>().Head;
     startingPosition = transform.localPosition;
-    CardboardGUI.IsGUIVisible = true;
-    CardboardGUI.onGUICallback += this.OnGUI;
+//    CardboardGUI.IsGUIVisible = true;
+//    CardboardGUI.onGUICallback += this.OnGUI;
   }
 
   void Update() {
@@ -39,16 +39,16 @@ public class Teleport : MonoBehaviour {
       transform.localPosition = direction * distance;
     }
   }
-
-  void OnGUI() {
-    if (!CardboardGUI.OKToDraw(this)) {
-      return;
-    }
-    if (GUI.Button(new Rect(50, 50, 200, 50), "Reset")) {
-      transform.localPosition = startingPosition;
-    }
-    if (GUI.Button(new Rect(50, 110, 200, 50), "Recenter")) {
-      Cardboard.SDK.Recenter();
-    }
-  }
+//
+//  void OnGUI() {
+//    if (!CardboardGUI.OKToDraw(this)) {
+//      return;
+//    }
+//    if (GUI.Button(new Rect(50, 50, 200, 50), "Reset")) {
+//      transform.localPosition = startingPosition;
+//    }
+//    if (GUI.Button(new Rect(50, 110, 200, 50), "Recenter")) {
+//      Cardboard.SDK.Recenter();
+//    }
+//  }
 }
