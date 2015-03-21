@@ -61,14 +61,14 @@ public class PlayerMove : MonoBehaviour {
 	
 	void Update()
 	{
-		if (_networkView.isMine) 
-		{
+//		if (_networkView.isMine) 
+//		{
 			InputMovement ();
-		}
-		else
-		{
-			SyncedMovement();
-		}
+//		}
+//		else
+//		{
+//			SyncedMovement();
+//		}
 	}
 	
 	void InputMovement()
