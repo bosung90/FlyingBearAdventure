@@ -1,0 +1,24 @@
+# Blender3D MTL File: 
+# Material Count: 2
+newmtl material_38_177cc_SH_SM_Light_2.dds
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.100663 0.100663 0.100663
+Ks 0.003516 0.003516 0.003516
+Ni 1.000000
+d 0.000000
+illum 2
+map_Kd SH SM Light_2.dds
+
+
+newmtl material_37_6905b_SH_SM_Light.dds
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.100663 0.100663 0.100663
+Ks 0.003516 0.003516 0.003516
+Ni 1.000000
+d 0.000000
+illum 2
+map_Kd SH SM Light.dds
+
+
