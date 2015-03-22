@@ -109,11 +109,11 @@ public class Multiplayer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(ClientCamera.transform.parent == null)
-		{
-			networkPlayer = GameObject.FindGameObjectWithTag ("Player");
-			if(networkPlayer != null)
-				ClientCamera.transform.parent = networkPlayer.transform;
-		}
+//		if(ClientCamera.transform.parent == null)
+//		{
+//			networkPlayer = GameObject.FindGameObjectWithTag ("Player");
+//			if(networkPlayer != null)
+//				ClientCamera.transform.parent = networkPlayer.transform;
+//		}
 	}
 }
