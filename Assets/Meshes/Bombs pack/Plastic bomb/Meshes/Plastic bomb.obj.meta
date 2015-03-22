@@ -1,7 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
+guid: 5eb4f6b1a92739246afe586dc2d32c8d
+=======
 guid: bd1f2a50199074728ab4e023218f6b3b
 timeCreated: 1427060607
 licenseType: Free
+>>>>>>> 2d11ad27233513f4c09ae73348ec1939ad92dd7c
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
@@ -17,10 +21,18 @@ ModelImporter:
     3300002: Plastic_bomb_collider
     4300000: Plastic_bomb
     4300002: Plastic_bomb_collider
+<<<<<<< HEAD
+    9500000: //RootNode
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 0
+=======
   materials:
     importMaterials: 1
     materialName: 0
     materialSearch: 1
+>>>>>>> 2d11ad27233513f4c09ae73348ec1939ad92dd7c
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -50,7 +62,11 @@ ModelImporter:
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
+<<<<<<< HEAD
+    useFileScale: 0
+=======
     useFileScale: 1
+>>>>>>> 2d11ad27233513f4c09ae73348ec1939ad92dd7c
   tangentSpace:
     normalSmoothAngle: 60
     splitTangentsAcrossUV: 1
