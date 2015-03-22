@@ -37,6 +37,7 @@ public class Multiplayer : MonoBehaviour {
 		Debug.Log(string.Format("Server Initializied with GameName: {0} on port: {1}", typeName, port));
 		//Spawn player and enemy upon server initialization.
 		GameObject playerGenerated = Network.Instantiate(PlayerPrefab, PlayerPrefab.transform.position, Quaternion.identity, 0) as GameObject;
+		CardboardCamera.transform.position = playerGenerated.transform.position + Vector3.up;
 		CardboardCamera.transform.parent = playerGenerated.transform;
 		Network.Instantiate(EnemyPrefab, EnemyPrefab.transform.position, Quaternion.identity, 0);
 	}
