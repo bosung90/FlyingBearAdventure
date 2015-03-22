@@ -29,14 +29,15 @@ public class Objective : MonoBehaviour {
 	}
 
 	void checkQuest() {
-		if(Quest.currentQ == Quest.questType.Quest2) {
+		if (Quest.currentQ == Quest.questType.Quest2) {
 			firstObj = ">> (1) Find the document to hack into system [x] \n";
-		}else if(Quest.currentQ == Quest.questType.Quest3) {
+		} else if (Quest.currentQ == Quest.questType.Quest3) {
 			secondObj = ">> (2) Find a Computer to breach the security [x] \n";
-		}else if(Quest.currentQ == Quest.questType.Quest4) {
+		} else if (Quest.currentQ == Quest.questType.Quest4) {
 			thirdObj = ">> (3) Find explosives [x] \n";
-		}else if(Quest.currentQ == Quest.questType.Finish) {
+		} else if (Quest.currentQ == Quest.questType.Finish) {
 			fourthObj = ">> (4) Plant Bombs [x] \n";
 			fifthObj = ">> (5) Excape the factory [x] \n";
 		}
+	}
 }
