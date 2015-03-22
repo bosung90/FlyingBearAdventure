@@ -3,10 +3,10 @@ using System.Collections;
 
 public class Quest : MonoBehaviour {
 
-	public enum questType {Quest1, Quest2, Quest3, Finish};
+	public enum questType {Quest1, Quest2, Quest3, Quest4, Finish};
 	public GameObject _bombPrefab, _dataPrefab;
 	public Transform camera;
-	questType currentQ;
+	public static questType currentQ;
 	bool _hasBomb, _posted;
 	public GameObject[] _marked, _checked;
 
@@ -52,6 +52,7 @@ public class Quest : MonoBehaviour {
 			newData.transform.position = this.transform.position + camera.transform.forward;
 			Debug.Log ("CurrentQuest : quest3 entered");
 		} else if (currentQ == questType.Quest3 && collision.gameObject.tag == "bomb") {
+			currentQ = questType.Quest4;
 			_hasBomb = true;
 			Destroy (collision.gameObject);
 		} else if (currentQ == questType.Quest3 && collision.gameObject.tag == "mark" && _hasBomb) {
