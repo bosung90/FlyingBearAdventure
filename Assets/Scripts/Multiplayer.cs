@@ -3,29 +3,43 @@ using System.Collections;
 
 public class Multiplayer : MonoBehaviour {
 
-	public GameObject Player;
-	public GameObject Enemy;
+	public GameObject PlayerPrefab;
+	public GameObject EnemyPrefab;
 	public GameObject CardboardCamera;
+	public GameObject ClientCamera;
 
 	private const string typeName = "PrisonEscape";
 	private const string gameName = "EscapeRoom1";
 	private const int roomSize = 2;
 	private const int port = 16876;
 
+	private bool isServerStarted = false;
+
+	private GameObject networkPlayer;
+
 	//============================SERVER SIDE ===================================
 	private void StartServer()
 	{
-		Network.InitializeServer(roomSize, port, !Network.HavePublicAddress());
-		MasterServer.RegisterHost(typeName, gameName);
+//		Debug.LogError ("StartServer Called, serverStarted Status: " + isServerStarted);
+		if(!isServerStarted)
+		{
+			Network.InitializeServer(roomSize, port, !Network.HavePublicAddress());
+			MasterServer.RegisterHost(typeName, gameName);
+			isServerStarted = true;
+		}
 	}
 
 	void OnServerInitialized()
 	{
+//		Debug.LogError (string.Format ("Server Initializied with GameName: {0} on port: {1}", typeName, port));
+//		Debug.LogError ("Is Client Camera null: " + ClientCamera==null + " : isActive: ");
+		ClientCamera.SetActive (false);
 		Debug.Log(string.Format("Server Initializied with GameName: {0} on port: {1}", typeName, port));
 		//Spawn player and enemy upon server initialization.
-		GameObject playerGenerated = Network.Instantiate(Player, Player.transform.position, Quaternion.identity, 0) as GameObject;
+		GameObject playerGenerated = Network.Instantiate(PlayerPrefab, PlayerPrefab.transform.position, Quaternion.identity, 0) as GameObject;
+		CardboardCamera.transform.position = playerGenerated.transform.position + Vector3.up;
 		CardboardCamera.transform.parent = playerGenerated.transform;
-		Network.Instantiate(Enemy, Enemy.transform.position, Quaternion.identity, 0);
+		Network.Instantiate(EnemyPrefab, EnemyPrefab.transform.position, Quaternion.identity, 0);
 	}
 	//====================================================================================
 
@@ -60,8 +74,19 @@ public class Multiplayer : MonoBehaviour {
 	
 	void OnMasterServerEvent(MasterServerEvent msEvent)
 	{
+//		Instantiate (Enemy);
 		if (msEvent == MasterServerEvent.HostListReceived)
 			hostList = MasterServer.PollHostList();
+
+		if(hostList != null  && hostList.Length >0)
+		{
+			JoinServer(hostList[0]);
+		}
+		else
+		{
+//			Instantiate(Player);
+			StartServer();
+		}
 	}
 
 	private void JoinServer(HostData hostData)
@@ -72,16 +97,23 @@ public class Multiplayer : MonoBehaviour {
 	void OnConnectedToServer()
 	{
 		Debug.Log("Server Joined");
+		CardboardCamera.SetActive (false);
 	}
 	//==============================================================================
 
 	// Use this for initialization
 	void Start () {
-		StartServer();
+		RefreshHostList ();
+		
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+//		if(ClientCamera.transform.parent == null)
+//		{
+//			networkPlayer = GameObject.FindGameObjectWithTag ("Player");
+//			if(networkPlayer != null)
+//				ClientCamera.transform.parent = networkPlayer.transform;
+//		}
 	}
 }
