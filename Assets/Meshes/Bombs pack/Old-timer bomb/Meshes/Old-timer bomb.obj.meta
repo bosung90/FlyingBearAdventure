@@ -1,5 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: d6d6a960df51c5446a739eb62d37348b
+=======
+guid: a44dbf60a1f244f89b7b93c89f7c266f
+timeCreated: 1427060606
+licenseType: Free
+>>>>>>> 2d11ad27233513f4c09ae73348ec1939ad92dd7c
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
@@ -20,11 +26,18 @@ ModelImporter:
     4300000: Old_timer_bomb
     4300002: Old_timer_bomb_collider
     4300004: old_timer_bomb_glass
+<<<<<<< HEAD
     9500000: //RootNode
   materials:
     importMaterials: 0
     materialName: 0
     materialSearch: 0
+=======
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+>>>>>>> 2d11ad27233513f4c09ae73348ec1939ad92dd7c
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -54,7 +67,11 @@ ModelImporter:
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
+<<<<<<< HEAD
     useFileScale: 0
+=======
+    useFileScale: 1
+>>>>>>> 2d11ad27233513f4c09ae73348ec1939ad92dd7c
   tangentSpace:
     normalSmoothAngle: 60
     splitTangentsAcrossUV: 1
