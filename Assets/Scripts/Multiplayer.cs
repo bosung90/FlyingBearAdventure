@@ -20,7 +20,6 @@ public class Multiplayer : MonoBehaviour {
 	//============================SERVER SIDE ===================================
 	private void StartServer()
 	{
-//		Debug.LogError ("StartServer Called, serverStarted Status: " + isServerStarted);
 		if(!isServerStarted)
 		{
 			Network.InitializeServer(roomSize, port, !Network.HavePublicAddress());
@@ -31,14 +30,18 @@ public class Multiplayer : MonoBehaviour {
 
 	void OnServerInitialized()
 	{
-//		Debug.LogError (string.Format ("Server Initializied with GameName: {0} on port: {1}", typeName, port));
-//		Debug.LogError ("Is Client Camera null: " + ClientCamera==null + " : isActive: ");
 		ClientCamera.SetActive (false);
 		Debug.Log(string.Format("Server Initializied with GameName: {0} on port: {1}", typeName, port));
 		//Spawn player and enemy upon server initialization.
 		GameObject playerGenerated = Network.Instantiate(PlayerPrefab, PlayerPrefab.transform.position, Quaternion.identity, 0) as GameObject;
+//		foreach (Transform child in playerGenerated.transform)     
+//		{  
+//			child.gameObject.SetActiveRecursively(false);   
+//		} 
+
 		CardboardCamera.transform.position = playerGenerated.transform.position + Vector3.up;
 		CardboardCamera.transform.parent = playerGenerated.transform;
+
 		Network.Instantiate(EnemyPrefab, EnemyPrefab.transform.position, Quaternion.identity, 0);
 	}
 	//====================================================================================
@@ -74,7 +77,6 @@ public class Multiplayer : MonoBehaviour {
 	
 	void OnMasterServerEvent(MasterServerEvent msEvent)
 	{
-//		Instantiate (Enemy);
 		if (msEvent == MasterServerEvent.HostListReceived)
 			hostList = MasterServer.PollHostList();
 
@@ -84,7 +86,6 @@ public class Multiplayer : MonoBehaviour {
 		}
 		else
 		{
-//			Instantiate(Player);
 			StartServer();
 		}
 	}
@@ -109,11 +110,5 @@ public class Multiplayer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-//		if(ClientCamera.transform.parent == null)
-//		{
-//			networkPlayer = GameObject.FindGameObjectWithTag ("Player");
-//			if(networkPlayer != null)
-//				ClientCamera.transform.parent = networkPlayer.transform;
-//		}
 	}
 }

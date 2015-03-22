@@ -17,6 +17,8 @@ public class CharControllerMove : MonoBehaviour {
 
 	CharacterController controller;
 
+	Animation charAnimation;
+
 	void Start()
 	{
 		_networkView = GetComponent<NetworkView> ();
@@ -31,6 +33,8 @@ public class CharControllerMove : MonoBehaviour {
 		{
 			cardboardCamera = cam.transform;
 		}
+
+		charAnimation = GetComponent<Animation> ();
 	}
 
 	void Update() 
@@ -51,11 +55,14 @@ public class CharControllerMove : MonoBehaviour {
 		
 		if (isWalking) {
 			moveDirection = cardboardCamera.forward;
+			moveDirection = new Vector3(moveDirection.x, 0, moveDirection.z);
+			moveDirection = moveDirection.normalized;
 			moveDirection = transform.TransformDirection(moveDirection);
 			moveDirection *= speed;
 			controller.Move(moveDirection * Time.deltaTime);
+			charAnimation.Play ("walk");
 		}
-		if( Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+		else if( Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
 		{
 			CharacterController controller = GetComponent<CharacterController>();
 			if (controller.isGrounded) {
@@ -68,6 +75,11 @@ public class CharControllerMove : MonoBehaviour {
 			}
 			moveDirection.y -= gravity * Time.deltaTime;
 			controller.Move(moveDirection * Time.deltaTime);
+			charAnimation.Play ("walk");
+		}
+		else
+		{
+			charAnimation.Play ("idle");
 		}
 	}
 }
