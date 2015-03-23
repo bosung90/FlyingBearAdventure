@@ -48,18 +48,22 @@ public class EnemyAI : MonoBehaviour {
 		Vector2 targetDir = new Vector2(Target.position.x - transform.position.x, Target.position.z - transform.position.z);
 		Vector2 forward = new Vector2(transform.forward.x, transform.forward.z);
         float angle = Vector2.Angle(targetDir, forward);
-
+		Debug.DrawLine(Sight.transform.position, Sight.transform.forward*VisionRange + this.transform.position, Color.cyan);
 		if(angle <= VisionAngle/2f)
 		{
 			RaycastHit hit;
 			if(Physics.Raycast(Sight.transform.position, Sight.transform.forward, out hit, VisionRange))
 			{
+
+
 				if(hit.transform.tag == "Player")
 				{
+					Debug.DrawLine(Sight.transform.position, hit.transform.position, Color.red);
 					canSee = true;
 				}
 				else
 				{
+					Debug.DrawLine(Sight.transform.position, hit.transform.position, Color.yellow);
 					canSee = false;
 				}
 			}
