@@ -9,7 +9,7 @@ public class TextStatus : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-			msg = GetComponent<Text> ();
+		msg = GetComponent<Text> ();
 		msg.enabled = false;
 	
 	}
