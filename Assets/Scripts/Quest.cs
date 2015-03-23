@@ -10,7 +10,7 @@ public class Quest : MonoBehaviour {
 	bool _hasBomb, _posted;
 	public GameObject[] _marked, _checked;
 
-	private float health = 100;
+	private float health = 1000;
 
 	// Use this for initialization
 	void Start () {
@@ -60,10 +60,10 @@ public class Quest : MonoBehaviour {
 			currentQ = questType.Quest4;
 			_hasBomb = true;
 			Destroy (collision.gameObject);
-		} else if (currentQ == questType.Quest3 && collision.gameObject.tag == "mark" && _hasBomb) {
-			GameObject newBomb = Instantiate (_bombPrefab) as GameObject;
+		} else if (currentQ == questType.Quest4 && collision.gameObject.tag == "mark" && _hasBomb) {
+			GameObject newBomb = Network.Instantiate (_bombPrefab, Vector3.zero, Quaternion.identity, 0) as GameObject;
 			Vector3 _pos = collision.gameObject.transform.position;
-			newBomb.transform.position = collision.transform.position + Vector3.up;
+			newBomb.transform.position = collision.transform.position;
 			collision.gameObject.tag = "marked";
 		}		
 	}
