@@ -47,8 +47,9 @@ public class Multiplayer : MonoBehaviour {
 //		Network.Instantiate(EnemyPrefab, EnemyPrefab.transform.position, Quaternion.identity, 0);
 		for(int i=0; i<5; i++)
 		{
-			GameObject enemy = Network.Instantiate(EnemyPrefab, Vector3.zero, Quaternion.identity, 0) as GameObject;
-			iTween.MoveTo (enemy, iTween.Hash ("path", iTweenPath.GetPath ("enemyPath" + (i+1)), "time", (iTweenPath.GetPath ("enemyPath" + (i+1)).Length-1)*4, "easetype", iTween.EaseType.easeInOutSine, "looptype", iTween.LoopType.pingPong));
+			Vector3[] enemyPath = iTweenPath.GetPath ("enemyPath" + (i+1));
+			GameObject enemy = Network.Instantiate(EnemyPrefab, enemyPath[0], Quaternion.identity, 0) as GameObject;
+			iTween.MoveTo (enemy, iTween.Hash ("path", enemyPath, "time", (enemyPath.Length-1)*4, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.loop));
 		}
 	}
 	//====================================================================================
