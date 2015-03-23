@@ -19,6 +19,10 @@ public class CharControllerMove : MonoBehaviour {
 
 	Animation charAnimation;
 
+	private Vector3 prev_coord = Vector3.zero;
+
+	float idleAnimationTick = 0.2f;
+
 	void Start()
 	{
 		_networkView = GetComponent<NetworkView> ();
@@ -39,6 +43,22 @@ public class CharControllerMove : MonoBehaviour {
 
 	void Update() 
 	{
+		float movementDist = (this.transform.position - prev_coord).magnitude;
+		if(movementDist > 0.005f)
+		{
+			if (prev_coord != Vector3.zero) 
+			{
+				Vector3 dir = (this.transform.position - prev_coord).normalized;
+				this.transform.forward = dir;
+			}
+			charAnimation.Play ("walk");
+			idleAnimationTick = 0.2f;
+		}
+		idleAnimationTick -= Time.deltaTime;
+		if(idleAnimationTick<=0)
+			charAnimation.Play ("idle");
+		prev_coord = this.transform.position;
+
 		if (_networkView.isMine) 
 		{
 			InputMovement ();
@@ -60,7 +80,6 @@ public class CharControllerMove : MonoBehaviour {
 			moveDirection = transform.TransformDirection(moveDirection);
 			moveDirection *= speed;
 			controller.Move(moveDirection * Time.deltaTime);
-			charAnimation.Play ("walk");
 		}
 		else if( Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
 		{
@@ -71,15 +90,9 @@ public class CharControllerMove : MonoBehaviour {
 				moveDirection *= speed;
 				if (Input.GetButton("Jump"))
 					moveDirection.y = jumpSpeed;
-				
 			}
 			moveDirection.y -= gravity * Time.deltaTime;
 			controller.Move(moveDirection * Time.deltaTime);
-			charAnimation.Play ("walk");
-		}
-		else
-		{
-			charAnimation.Play ("idle");
 		}
 	}
 }
