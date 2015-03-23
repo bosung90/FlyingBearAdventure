@@ -16,9 +16,22 @@ public class EnemyAI : MonoBehaviour {
 
 	private Vector3 prev_coord = Vector3.zero;
 
+	AudioSource shootingAudio;
+
 	// Use this for initialization
 	void Start () {
+		shootingAudio = GetComponent<AudioSource> ();
 		ren = GetComponentInChildren<Renderer> ();
+		InvokeRepeating ("ShootPlayer", 0, 1f);
+	}
+
+	void ShootPlayer()
+	{
+		if(canSee)
+		{
+			Target.gameObject.SendMessage("TakeDamage", 5f, SendMessageOptions.DontRequireReceiver);
+			shootingAudio.Play ();
+		}
 	}
 	
 	// Update is called once per frame
@@ -58,6 +71,7 @@ public class EnemyAI : MonoBehaviour {
 
 				if(hit.transform.tag == "Player")
 				{
+
 					Debug.DrawLine(Sight.transform.position, hit.transform.position, Color.red);
 					canSee = true;
 				}

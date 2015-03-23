@@ -3,13 +3,14 @@ using System.Collections;
 
 public class Quest : MonoBehaviour {
 
-	public enum questType {Quest1, Quest2, Quest3, Quest4, Finish};
+	public enum questType {Quest1, Quest2, Quest3, Quest4, Finish, GameOver};
 	public GameObject _bombPrefab, _dataPrefab;
 	public Transform camera;
 	public static questType currentQ;
 	bool _hasBomb, _posted;
 	public GameObject[] _marked, _checked;
 
+	private float health = 100;
 
 	// Use this for initialization
 	void Start () {
@@ -30,7 +31,16 @@ public class Quest : MonoBehaviour {
 			Debug.Log ("CurrentQuest : finished");
 			_posted = false;
 		}
-	
+
+		if(currentQ == questType.GameOver)
+		{
+			Destroy(this.gameObject);
+		}
+		else if(currentQ == questType.Finish)
+		{
+			//Explosion happens!!
+
+		}
 	}
 
 	void OnTriggerEnter(Collider collision) {
@@ -63,6 +73,12 @@ public class Quest : MonoBehaviour {
 		}		
 	}
 
-
-
+	void TakeDamage(float damage)
+	{
+		health -= damage;
+		if(health <=0 )
+		{
+			currentQ = questType.GameOver;
+		}
+	}
 }
