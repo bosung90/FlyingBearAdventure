@@ -54,7 +54,7 @@ public class Quest : MonoBehaviour {
 		} else if (currentQ == questType.Quest2 && collision.gameObject.tag == "comp") {
 			currentQ = questType.Quest3;
 			GameObject newData = Instantiate (_dataPrefab) as GameObject;
-			newData.transform.position = this.transform.position + camera.transform.forward;
+			newData.transform.position = collision.transform.position + Vector3.right;
 			Debug.Log ("CurrentQuest : quest3 entered");
 		} else if (currentQ == questType.Quest3 && collision.gameObject.tag == "bomb") {
 			currentQ = questType.Quest4;
@@ -63,7 +63,7 @@ public class Quest : MonoBehaviour {
 		} else if (currentQ == questType.Quest3 && collision.gameObject.tag == "mark" && _hasBomb) {
 			GameObject newBomb = Instantiate (_bombPrefab) as GameObject;
 			Vector3 _pos = collision.gameObject.transform.position;
-			newBomb.transform.position = new Vector3 (_pos.x, _pos.y + 0.1f, _pos.z);
+			newBomb.transform.position = collision.transform.position + Vector3.up;
 			collision.gameObject.tag = "marked";
 		}		
 	}
