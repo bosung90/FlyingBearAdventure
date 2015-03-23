@@ -46,11 +46,11 @@ public class CharControllerMove : MonoBehaviour {
 		float movementDist = (this.transform.position - prev_coord).magnitude;
 		if(movementDist > 0.005f)
 		{
-			if (prev_coord != Vector3.zero) 
-			{
-				Vector3 dir = (this.transform.position - prev_coord).normalized;
-				this.transform.forward = dir;
-			}
+//			if (prev_coord != Vector3.zero) 
+//			{
+//				Vector3 dir = (this.transform.position - prev_coord).normalized;
+//				this.transform.forward = dir;
+//			}
 			charAnimation.Play ("walk");
 			idleAnimationTick = 0.2f;
 		}
