@@ -36,12 +36,12 @@ public class Multiplayer : MonoBehaviour {
 		Debug.Log(string.Format("Server Initializied with GameName: {0} on port: {1}", typeName, port));
 		//Spawn player and enemy upon server initialization.
 		GameObject playerGenerated = Network.Instantiate(PlayerPrefab, PlayerPrefab.transform.position, Quaternion.identity, 0) as GameObject;
-		foreach (Transform child in playerGenerated.transform)     
-		{  
-			child.gameObject.SetActiveRecursively(false);   
-		} 
+//		foreach (Transform child in playerGenerated.transform)     
+//		{  
+//			child.gameObject.SetActiveRecursively(false);   
+//		} 
 
-		CardboardCamera.transform.position = playerGenerated.transform.position + Vector3.up;
+		CardboardCamera.transform.position = playerGenerated.transform.position + Vector3.up*1.736f + playerGenerated.transform.forward*0.042f;
 		CardboardCamera.transform.parent = playerGenerated.transform;
 
 //		Network.Instantiate(EnemyPrefab, EnemyPrefab.transform.position, Quaternion.identity, 0);

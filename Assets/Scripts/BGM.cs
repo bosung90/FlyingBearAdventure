@@ -2,32 +2,38 @@
 using System.Collections;
 
 public class BGM : MonoBehaviour {
-
-	public AudioSource bgm, _fin, _gg;
-	bool _bgm;
+	private AudioSource[] audios;
+	private AudioSource bgm, _fin, _gg;
+	bool isFinishSoundPlayed = false;
+	bool isGameOverSoundPlayed = false;
 
 	// Use this for initialization
 	void Start () {
-		bgm = GetComponent<AudioSource> ();
-		_fin = GetComponent<AudioSource> ();
-		_gg = GetComponent<AudioSource> ();
-		_bgm = true;
+		audios = GetComponents<AudioSource> ();
+		bgm = audios[0];
+		_gg = audios[1];
+		_fin = audios[2];
+//		_bgm = true;
 	
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (_bgm) {
-			bgm.Play ();
-			_bgm = false;
-		}
+//		if (_bgm) {
+//			bgm.Play ();
+//			_bgm = false;
+//		}
 
-		if (Quest.currentQ == Quest.questType.Finish) {
-			bgm.Stop ();
+		if (!isFinishSoundPlayed && Quest.currentQ == Quest.questType.Finish) {
+			if(bgm.isPlaying)
+				bgm.Stop ();
 			_fin.Play ();
-		} else if (Quest.currentQ == Quest.questType.GameOver) {
-			bgm.Stop ();
+			isFinishSoundPlayed = true;
+		} else if (!isGameOverSoundPlayed && Quest.currentQ == Quest.questType.GameOver) {
+			if(bgm.isPlaying)
+				bgm.Stop ();
 			_gg.Play ();
+			isGameOverSoundPlayed = true;
 		}
 	
 	}
