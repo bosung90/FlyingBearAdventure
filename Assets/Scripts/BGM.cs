@@ -27,11 +27,15 @@ public class BGM : MonoBehaviour {
 		if (!isFinishSoundPlayed && Quest.currentQ == Quest.questType.Finish) {
 			if(bgm.isPlaying)
 				bgm.Stop ();
+			AudioListener listener = GetComponent<AudioListener>();
+			listener.enabled = true;
 			_fin.Play ();
 			isFinishSoundPlayed = true;
 		} else if (!isGameOverSoundPlayed && Quest.currentQ == Quest.questType.GameOver) {
 			if(bgm.isPlaying)
 				bgm.Stop ();
+			AudioListener listener = GetComponent<AudioListener>();
+			listener.enabled = true;
 			_gg.Play ();
 			isGameOverSoundPlayed = true;
 		}

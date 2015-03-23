@@ -10,7 +10,7 @@ public class Quest : MonoBehaviour {
 	bool _hasBomb, _posted;
 	public GameObject[] _marked, _checked;
 
-	private float health = 1000;
+	private float health = 300;
 
 	// Use this for initialization
 	void Start () {
