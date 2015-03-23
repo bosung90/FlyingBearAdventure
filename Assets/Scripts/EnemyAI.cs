@@ -14,13 +14,22 @@ public class EnemyAI : MonoBehaviour {
 
 	private Renderer ren;
 
+	private Vector3 prev_coord = Vector3.zero;
+
 	// Use this for initialization
 	void Start () {
-		ren = GetComponent<Renderer> ();
+		ren = GetComponentInChildren<Renderer> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+		if (prev_coord != Vector3.zero) 
+		{
+			Vector3 dir = (this.transform.position - prev_coord).normalized;
+			this.transform.forward = dir;
+		}
+		prev_coord = this.transform.position;
 
 		if(Target == null)
 		{

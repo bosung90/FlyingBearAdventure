@@ -17,6 +17,8 @@ public class Multiplayer : MonoBehaviour {
 
 	private GameObject networkPlayer;
 
+//	public GameObject[] EnemiesPrefab;
+
 	//============================SERVER SIDE ===================================
 	private void StartServer()
 	{
@@ -42,7 +44,13 @@ public class Multiplayer : MonoBehaviour {
 		CardboardCamera.transform.position = playerGenerated.transform.position + Vector3.up;
 		CardboardCamera.transform.parent = playerGenerated.transform;
 
-		Network.Instantiate(EnemyPrefab, EnemyPrefab.transform.position, Quaternion.identity, 0);
+//		Network.Instantiate(EnemyPrefab, EnemyPrefab.transform.position, Quaternion.identity, 0);
+		for(int i=0; i<5; i++)
+		{
+			Vector3[] enemyPath = iTweenPath.GetPath ("enemyPath" + (i+1));
+			GameObject enemy = Network.Instantiate(EnemyPrefab, enemyPath[0], Quaternion.identity, 0) as GameObject;
+			iTween.MoveTo (enemy, iTween.Hash ("path", enemyPath, "time", (enemyPath.Length-1)*4, "easetype", iTween.EaseType.linear, "looptype", iTween.LoopType.loop));
+		}
 	}
 	//====================================================================================
 
