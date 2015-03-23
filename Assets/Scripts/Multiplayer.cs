@@ -118,5 +118,10 @@ public class Multiplayer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (Quest.currentQ == Quest.questType.Finish || Quest.currentQ == Quest.questType.GameOver) {
+			CardboardCamera.SetActive(false);
+			ClientCamera.SetActive(false);
+		}
+
 	}
 }
