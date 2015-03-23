@@ -61,7 +61,9 @@ public class Quest : MonoBehaviour {
 			_hasBomb = true;
 			Destroy (collision.gameObject);
 		} else if (currentQ == questType.Quest4 && collision.gameObject.tag == "mark" && _hasBomb) {
-			GameObject newBomb = Network.Instantiate (_bombPrefab, Vector3.zero, Quaternion.identity, 0) as GameObject;
+
+			GameObject newBomb = Instantiate (_bombPrefab) as GameObject;
+
 			Vector3 _pos = collision.gameObject.transform.position;
 			newBomb.transform.position = collision.transform.position;
 			collision.gameObject.tag = "marked";
