@@ -5,7 +5,6 @@ public class Quest : MonoBehaviour {
 
 	public enum questType {Quest1, Quest2, Quest3, Quest4, Finish, GameOver};
 	public GameObject _bombPrefab, _dataPrefab;
-	public AudioSource explosion;
 	public Transform camera;
 	public static questType currentQ;
 	bool _hasBomb, _posted;
@@ -18,7 +17,6 @@ public class Quest : MonoBehaviour {
 		currentQ = questType.Quest1;
 		_hasBomb = false;
 		_posted = true;
-		explosion = GetComponent<AudioSource> ();
 	
 	}
 	
@@ -37,12 +35,6 @@ public class Quest : MonoBehaviour {
 		if(currentQ == questType.GameOver)
 		{
 			Destroy(this.gameObject);
-		}
-		else if(currentQ == questType.Finish)
-		{
-			//Explosion happens!!
-			explosion.Play();
-
 		}
 	}
 
