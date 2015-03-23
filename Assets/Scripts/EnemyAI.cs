@@ -29,7 +29,7 @@ public class EnemyAI : MonoBehaviour {
 	{
 		if(canSee)
 		{
-			Target.gameObject.SendMessage("TakeDamage", 5f, SendMessageOptions.DontRequireReceiver);
+			Target.gameObject.SendMessage("TakeDamage", 50f, SendMessageOptions.DontRequireReceiver);
 			shootingAudio.Play ();
 		}
 	}

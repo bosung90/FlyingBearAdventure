@@ -34,7 +34,7 @@ public class Quest : MonoBehaviour {
 
 		if(currentQ == questType.GameOver)
 		{
-			Destroy(this.gameObject);
+//			Destroy(this.gameObject);
 		}
 	}
 
