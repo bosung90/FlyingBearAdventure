@@ -1,17 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Multiplayer : MonoBehaviour {
-
+	
 	public GameObject PlayerPrefab;
 	public GameObject EnemyPrefab;
 	public GameObject CardboardCamera;
 	public GameObject ClientCamera;
 
-	private const string typeName = "PrisonEscape";
-	private const string gameName = "EscapeRoom1";
+	private const string typeName = "InfiltrateBear";
+	private const string defaultGameName = "InfiltrateBear";
 	private const int roomSize = 2;
-	private const int port = 100;
+	private const int port = 16874;
+
+	private string gameName = "InfiltrateBear";
 
 	private bool isServerStarted = false;
 
@@ -32,8 +35,9 @@ public class Multiplayer : MonoBehaviour {
 
 	void OnServerInitialized()
 	{
+		CardboardCamera.SetActive (true);
 		ClientCamera.SetActive (false);
-		Debug.Log(string.Format("Server Initializied with GameName: {0} on port: {1}", typeName, port));
+		Debug.Log(string.Format("Server Initializied with GameName: {0} on port: {1}", gameName, port));
 		//Spawn player and enemy upon server initialization.
 		GameObject playerGenerated = Network.Instantiate(PlayerPrefab, PlayerPrefab.transform.position, Quaternion.identity, 0) as GameObject;
 //		foreach (Transform child in playerGenerated.transform)     
@@ -106,14 +110,28 @@ public class Multiplayer : MonoBehaviour {
 	void OnConnectedToServer()
 	{
 		Debug.Log("Server Joined");
+		ClientCamera.SetActive (true);
 		CardboardCamera.SetActive (false);
 	}
 	//==============================================================================
 
 	// Use this for initialization
 	void Start () {
-		RefreshHostList ();
+
+
+		//RefreshHostList ();
 		
+	}
+
+	public void StartGame()
+	{
+		GameObject inputFieldGO = GameObject.FindGameObjectWithTag ("inputRoomName");
+		InputField inputField = inputFieldGO.GetComponent<InputField> ();
+		gameName = inputField.text;
+
+
+
+		RefreshHostList ();
 	}
 	
 	// Update is called once per frame
