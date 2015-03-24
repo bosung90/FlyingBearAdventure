@@ -11,7 +11,7 @@ public class Multiplayer : MonoBehaviour {
 	private const string typeName = "PrisonEscape";
 	private const string gameName = "EscapeRoom1";
 	private const int roomSize = 2;
-	private const int port = 16876;
+	private const int port = 100;
 
 	private bool isServerStarted = false;
 
