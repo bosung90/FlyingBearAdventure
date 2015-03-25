@@ -9,12 +9,10 @@ public class Multiplayer : MonoBehaviour {
 	public GameObject CardboardCamera;
 	public GameObject ClientCamera;
 
-	private const string typeName = "InfiltrateBear";
+	private string typeName = "InfiltrateBear32";
 	private const string defaultGameName = "InfiltrateBear";
 	private const int roomSize = 2;
 	private const int port = 16874;
-
-	private string gameName = "InfiltrateBear";
 
 	private bool isServerStarted = false;
 
@@ -28,7 +26,7 @@ public class Multiplayer : MonoBehaviour {
 		if(!isServerStarted)
 		{
 			Network.InitializeServer(roomSize, port, !Network.HavePublicAddress());
-			MasterServer.RegisterHost(typeName, gameName);
+			MasterServer.RegisterHost(typeName, defaultGameName);
 			isServerStarted = true;
 		}
 	}
@@ -37,7 +35,7 @@ public class Multiplayer : MonoBehaviour {
 	{
 		CardboardCamera.SetActive (true);
 		ClientCamera.SetActive (false);
-		Debug.Log(string.Format("Server Initializied with GameName: {0} on port: {1}", gameName, port));
+		Debug.Log(string.Format("Server Initializied with Type Name: {0} on port: {1}", typeName, port));
 		//Spawn player and enemy upon server initialization.
 		GameObject playerGenerated = Network.Instantiate(PlayerPrefab, PlayerPrefab.transform.position, Quaternion.identity, 0) as GameObject;
 //		foreach (Transform child in playerGenerated.transform)     
@@ -127,7 +125,7 @@ public class Multiplayer : MonoBehaviour {
 	{
 		GameObject inputFieldGO = GameObject.FindGameObjectWithTag ("inputRoomName");
 		InputField inputField = inputFieldGO.GetComponent<InputField> ();
-		gameName = inputField.text;
+		typeName = inputField.text;
 
 
 
