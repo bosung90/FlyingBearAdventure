@@ -9,6 +9,7 @@ public class Multiplayer : MonoBehaviour {
 	public GameObject CardboardCamera;
 	public GameObject ClientCamera;
 
+	private const string TYPENAME_PREFAX = "IB";
 	private string typeName = "InfiltrateBear32";
 	private const string defaultGameName = "InfiltrateBear";
 	private const int roomSize = 2;
@@ -125,7 +126,7 @@ public class Multiplayer : MonoBehaviour {
 	{
 		GameObject inputFieldGO = GameObject.FindGameObjectWithTag ("inputRoomName");
 		InputField inputField = inputFieldGO.GetComponent<InputField> ();
-		typeName = inputField.text;
+		typeName = TYPENAME_PREFAX + inputField.text;
 
 
 
