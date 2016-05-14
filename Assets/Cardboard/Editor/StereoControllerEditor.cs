@@ -17,14 +17,20 @@ using UnityEditor;
 using System.Collections;
 using System.Linq;
 
+/// @ingroup EditorScripts
+/// A custom editor for the StereoController script.  It exists to add the _Update
+/// Stereo Cameras_ button to the StereoController's Inspector window, and to the
+/// corresponding main menu entry and Camera context menu command.  The usage of the
+/// these actions is described in StereoController.
 [CustomEditor(typeof(StereoController))]
 public class StereoControllerEditor : Editor {
-  // Name of button, and part of "Undo ..." message.
+  /// Name of button, and part of "Undo ..." message.
   public const string ACTION_NAME = "Update Stereo Cameras";
 
   private GUIContent updateButton =
     new GUIContent(ACTION_NAME, "Copy all Camera settings to the stereo cameras.");
 
+  /// @cond HIDDEN
   public override void OnInspectorGUI() {
     DrawDefaultInspector();
     GUILayout.BeginHorizontal(GUILayout.ExpandHeight(false));
@@ -37,31 +43,32 @@ public class StereoControllerEditor : Editor {
     GUILayout.EndHorizontal();
   }
 
-  [MenuItem("Component/Cardboard/Update Stereo Cameras", true)]
+  [MenuItem("Component/Cardboard/Update Stereo Cameras", true, 40)]
   public static bool CanUpdateStereoCameras() {
     // Make sure all selected items have valid cameras.
     return Selection.gameObjects.Where(go => CanUpdateStereoCameras(go)).Count()
         == Selection.gameObjects.Length;
   }
 
-  [MenuItem("CONTEXT/Camera/Update Stereo Cameras", true)]
+  [MenuItem("CONTEXT/Camera/Update Stereo Cameras", true, 41)]
   public static bool CanUpdateStereoCamerasContext(MenuCommand command) {
     var camera = (Camera)command.context;
     return CanUpdateStereoCameras(camera.gameObject);
   }
 
-  [MenuItem("Component/Cardboard/Update Stereo Cameras")]
+  [MenuItem("Component/Cardboard/Update Stereo Cameras", false, 42)]
   public static void UpdateStereoCameras() {
     foreach (var go in Selection.gameObjects) {
       DoUpdateStereoCameras(go);
     }
   }
 
-  [MenuItem("CONTEXT/Camera/Update Stereo Cameras")]
+  [MenuItem("CONTEXT/Camera/Update Stereo Cameras", false, 43)]
   public static void UpdateStereoCamerasContext(MenuCommand command) {
     var camera = (Camera)command.context;
     DoUpdateStereoCameras(camera.gameObject);
   }
+  /// @endcond
 
   private static bool CanUpdateStereoCameras(GameObject go) {
     return go != null &&
@@ -79,7 +86,6 @@ public class StereoControllerEditor : Editor {
     }
 
     // Remember current state of stereo rig.
-    bool hadSkybox = go.GetComponent<SkyboxMesh>() != null;
     bool hadHead = controller.Head != null;
     bool hadEyes = controller.Eyes.Length > 0;
 
@@ -87,20 +93,10 @@ public class StereoControllerEditor : Editor {
 
     // Support undo...
 
-    // Skybox mesh.  Deletes it if camera is not Main.
-    var skybox = go.GetComponent<SkyboxMesh>();
-    if (skybox != null) {
-      if (!hadSkybox) {
-        Undo.RegisterCreatedObjectUndo(skybox, ACTION_NAME);
-      } else if (go.GetComponent<Camera>().tag != "MainCamera") {
-        Undo.DestroyObjectImmediate(skybox);
-      }
-    }
-
     // Head.
     var head = go.GetComponent<CardboardHead>();
     if (head != null && !hadHead) {
-        Undo.RegisterCreatedObjectUndo(head, ACTION_NAME);
+      Undo.RegisterCreatedObjectUndo(head, ACTION_NAME);
     }
 
     // Eyes. Synchronizes them with controller's camera too.

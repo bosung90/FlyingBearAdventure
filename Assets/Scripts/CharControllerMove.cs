@@ -67,11 +67,14 @@ public class CharControllerMove : MonoBehaviour {
 
 	void InputMovement()
 	{
-		if(CardboardMagnetSensor.CheckIfWasClicked ())
-		{
+		if(Cardboard.SDK.Triggered) {
 			isWalking = !isWalking;
-			CardboardMagnetSensor.ResetClick();
 		}
+		//if(CardboardMagnetSensor.CheckIfWasClicked ())
+		//{
+		//	isWalking = !isWalking;
+		//	CardboardMagnetSensor.ResetClick();
+		//}
 		
 		if (isWalking) {
 			moveDirection = cardboardCamera.forward;
